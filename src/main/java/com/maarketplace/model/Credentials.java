@@ -1,0 +1,157 @@
+package com.maarketplace.model;
+
+import com.maarketplace.helpers.constants.FieldSizes;
+import com.maarketplace.helpers.constants.GlobalValues;
+import com.maarketplace.helpers.constants.Temporals;
+import com.maarketplace.helpers.credentials.Roles;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jdk.jfr.Unsigned;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+@Entity(name = "Credentials")
+@Table(name = "Credentials", schema = GlobalValues.SQL_SCHEMA_NAME, uniqueConstraints = @UniqueConstraint(name = "credentials_username_unique", columnNames = "username"))
+public class Credentials {
+
+    public static Roles DEFAULT_ROLE = Roles.BUYER;
+
+    @Id
+    @Unsigned
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    @Min(value = FieldSizes.ENTITY_ID_MIN_VALUE)
+    private Long id;
+    @NotBlank
+    @Size(min = FieldSizes.USERNAME_MIN_LENGTH, max = FieldSizes.USERNAME_MAX_LENGTH, message = "The length of the username must be between 3 and 60 characters.")
+    @Column(name = "username", unique = true, nullable = false)
+    @NotBlank(message = "Username is mandatory field.")
+    private String username;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private Roles role;
+
+    @Column(name = "inserted_at", nullable = false)
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = Temporals.DATE_TIME_FORMAT)
+    private LocalDateTime insertedAt;
+
+    @Column(name = "updated_at", nullable = false)
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = Temporals.DATE_TIME_FORMAT)
+    private LocalDateTime updatedAt;
+
+    public Credentials() {
+        this.role = Credentials.DEFAULT_ROLE;
+    }
+
+    public Credentials(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.role = Credentials.DEFAULT_ROLE;
+    }
+
+    public Credentials(String username, String password, @NotNull Roles role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Roles getRole() {
+        return this.role;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
+    }
+
+    public LocalDateTime getInsertedAt() {
+        return this.insertedAt;
+    }
+
+    public void setInsertedAt(LocalDateTime insertedAt) {
+        this.insertedAt = insertedAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return this.updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (this.insertedAt == null) {
+            this.insertedAt = LocalDateTime.now();
+        }
+        if (this.updatedAt == null) {
+            this.updatedAt = this.insertedAt;
+        }
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @Override
+    public String toString() {
+        return "Credentials: {" +
+                // " id = " + this.getId() != null ? this.getId().toString() : "null" +
+                ", username = " + this.getUsername() +
+                ", role = " + this.getRole() +
+                " }";
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || this.getClass() != object.getClass()) {
+            return false;
+        }
+        Credentials credentials = (Credentials) object;
+        return Objects.equals(this.getId(), credentials.getId()) || Objects.equals(this.getUsername(), credentials.getUsername());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getId(), this.getUsername());
+    }
+}
