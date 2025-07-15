@@ -5,10 +5,7 @@ import com.maarketplace.helpers.constants.GlobalValues;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import jdk.jfr.Unsigned;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "Product")
