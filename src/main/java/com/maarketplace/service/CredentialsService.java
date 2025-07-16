@@ -40,9 +40,6 @@ public class CredentialsService {
 
         List<Predicate> predicates = new ArrayList<>();
 
-        if (Utils.existsRole(role)) {
-            predicates.add(criteriaBuilder.equal(rootCredentials.get("role"), role));
-        }
         if (TypeValidators.validateTimestamp(registeredFrom)) {
             predicates.add(criteriaBuilder.greaterThanOrEqualTo(rootCredentials.get("insertedAt"), registeredFrom));
         }

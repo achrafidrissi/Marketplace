@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "Cart")
-@Table(name = "Carts", schema = GlobalValues.SQL_SCHEMA_NAME, uniqueConstraints = {@UniqueConstraint(name = "carts_user_insertedat_unique", columnNames = {"_user", "inserted_at"})})
+@Table(name = "Carts",  schema = GlobalValues.SQL_SCHEMA_NAME, uniqueConstraints = {@UniqueConstraint(name = "carts_user_insertedat_unique", columnNames = {"_user", "inserted_at"})})
 public class Cart {
     public final static Float CART_START_PRICE = 0.0F;
     @Id

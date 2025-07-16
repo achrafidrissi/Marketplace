@@ -75,7 +75,6 @@ public class UserService {
             if (TypeValidators.validateString(updatedCredentials.getPassword())) {
                 user.getCredentials().setPassword(updatedCredentials.getPassword());
             }
-            user.getCredentials().setRole(updatedCredentials.getRole());
             user.getCredentials().preUpdate();
             user.setName(updatedUser.getName());
             user.setSurname(updatedUser.getSurname());

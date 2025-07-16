@@ -1,6 +1,5 @@
 package com.maarketplace.helpers;
 
-import com.maarketplace.helpers.credentials.Roles;
 import com.maarketplace.model.Product;
 
 import java.util.Arrays;
@@ -19,12 +18,6 @@ public class Utils {
             return 0.0F;
         }
         return roundNumberTo2Decimals(product.getPrice() * quantity);
-    }
-
-    public static boolean existsRole(String stringRole) {
-        return stringRole != null &&
-                Arrays.stream(Roles.values())
-                        .anyMatch(role -> role.toString().equals(stringRole));
     }
 
 }
