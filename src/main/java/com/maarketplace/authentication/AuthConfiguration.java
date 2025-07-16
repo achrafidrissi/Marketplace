@@ -38,8 +38,8 @@ public class AuthConfiguration {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .usersByUsernameQuery("SELECT username, password, TRUE as enabled FROM Credentials WHERE username = ?")
-                .authoritiesByUsernameQuery("SELECT username, 'USER' FROM Credentials WHERE username = ?");
+                .usersByUsernameQuery("SELECT username, password, TRUE as enabled FROM marketplace.Credentials WHERE username = ?")
+                .authoritiesByUsernameQuery("SELECT username, 'USER' FROM marketplace.Credentials WHERE username = ?");
     }
 
     @Bean

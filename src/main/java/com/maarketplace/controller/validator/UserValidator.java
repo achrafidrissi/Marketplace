@@ -2,7 +2,6 @@ package com.maarketplace.controller.validator;
 
 import com.maarketplace.model.User;
 import com.maarketplace.repository.UserRepository;
-import com.maarketplace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
