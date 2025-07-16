@@ -10,7 +10,7 @@ public class FieldValidators {
 
     private static final Pattern PRODUCT_NAME_PATTERN = Pattern.compile(FieldValidators.PRODUCT_NAME_REGEX);
 
-    private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8}$";
+    private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$";
 
     private static final Pattern PASSWORD_PATTERN = Pattern.compile(FieldValidators.PASSWORD_REGEX);
 

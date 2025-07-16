@@ -38,4 +38,8 @@ public class RegistrationRequest {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
+
+    public String getPassword() {
+        return credentials != null ? credentials.getPassword() : null;
+    }
 }

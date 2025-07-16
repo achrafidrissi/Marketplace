@@ -49,14 +49,14 @@ public class CredentialsValidator implements Validator {
         if ((!this.getIsAccountUpdate() && this.credentialsRepository.existsByUsername(credentials.getUsername())) ||
                 (this.getIsAccountUpdate() && !this.getCurrentUsername().equals(credentials.getUsername()) && this.credentialsRepository.existsByUsername(credentials.getUsername()))
         ) {
-            errors.rejectValue("username", "credentials.username.unique", "Username already used.");
+            errors.rejectValue("credentials.username", "credentials.username.unique", "Username already used.");
         }
         if ((!this.getIsAccountUpdate() && !FieldValidators.passwordValidator(credentials.getPassword())) || (this.isAccountUpdate && TypeValidators.validateString(credentials.getPassword()) && !FieldValidators.passwordValidator(credentials.getPassword()))
         ) {
-            errors.rejectValue("password", "credentials.password.invalidFormat", "The password must be 8 characters long and must has uppercase, lowercase and numbers.");
+            errors.rejectValue("credentials.password", "credentials.password.invalidFormat", "The password must be 8 characters long and must has uppercase, lowercase and numbers.");
         }
         if (this.getConfirmPassword() == null || !credentials.getPassword().equals(this.getConfirmPassword())) {
-            errors.rejectValue("password", "credentials.password.passwordDifferentFromConfirmPasswordError", "The confirm-password must be the same as the password.");
+            errors.rejectValue("credentials.password", "credentials.password.passwordDifferentFromConfirmPasswordError", "The confirm-password must be the same as the password.");
         }
 
     }
