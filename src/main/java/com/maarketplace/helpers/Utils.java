@@ -1,8 +1,9 @@
 package com.maarketplace.helpers;
 
+import com.maarketplace.model.Credentials;
 import com.maarketplace.model.Product;
-
-import java.util.Arrays;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class Utils {
 
@@ -19,5 +20,14 @@ public class Utils {
         }
         return roundNumberTo2Decimals(product.getPrice() * quantity);
     }
+
+    public static void cryptAndSaveUserCredentialsPassword(@NotNull Credentials credentials, @NotNull PasswordEncoder passwordEncoder) {
+        if (credentials.getPassword() == null) {
+            throw new IllegalArgumentException("Password cannot be null when encoding.");
+        }
+        String encodedPassword = passwordEncoder.encode(credentials.getPassword());
+        credentials.setPassword(encodedPassword);
+    }
+
 
 }
