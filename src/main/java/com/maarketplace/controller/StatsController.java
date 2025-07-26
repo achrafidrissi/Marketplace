@@ -5,7 +5,7 @@ import com.maarketplace.model.User;
 import com.maarketplace.repository.CartRepository;
 import com.maarketplace.repository.OrderRepository;
 import com.maarketplace.repository.ProductRepository;
-import com.maarketplace.service.UserService;
+import com.maarketplace.service.prov.UserService1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +26,7 @@ public class StatsController {
     private CartRepository cartRepository;
 
     @Autowired
-    private UserService userService;
+    private UserService1 userService;
 
     /**
      * Total number of products in catalog

@@ -7,8 +7,8 @@ import com.maarketplace.controller.validator.UserValidator;
 import com.maarketplace.helpers.Utils;
 import com.maarketplace.model.Credentials;
 import com.maarketplace.model.User;
-import com.maarketplace.service.CredentialsService;
-import com.maarketplace.service.UserService;
+import com.maarketplace.service.prov.CredentialsService1;
+import com.maarketplace.service.prov.UserService1;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,13 +36,13 @@ public class AuthenticationController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserService userService;
+    private UserService1 userService;
 
     @Autowired
     private UserValidator userValidator;
 
     @Autowired
-    private CredentialsService credentialsService;
+    private CredentialsService1 credentialsService;
 
     @Autowired
     private CredentialsValidator credentialsValidator;
