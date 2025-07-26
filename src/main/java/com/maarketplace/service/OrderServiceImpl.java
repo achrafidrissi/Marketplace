@@ -1,5 +1,6 @@
 package com.maarketplace.service;
 
+import com.maarketplace.exception.NotFoundException;
 import com.maarketplace.model.Cart;
 import com.maarketplace.model.Order;
 import com.maarketplace.model.User;
@@ -36,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Iterable<Order> getAllOrdersByUser(@NotNull User user) {
+    public List<Order> getAllOrdersByUser(@NotNull User user) {
         return orderRepository.findAllByUserOrderByInsertedAtDesc(user);
     }
 
@@ -62,4 +63,16 @@ public class OrderServiceImpl implements OrderService {
     public List<Object[]> getAllOrdersForUser(@NotNull Long userId) {
         return orderRepository.findAllByUserId(userId);
     }
+
+    @Override
+    public Order saveOrder(@NotNull Order order) {
+        return orderRepository.save(order);
+    }
+
+    @Override
+    public Order getOrder(@NotNull Long orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new NotFoundException("Order with ID " + orderId + " not found"));
+    }
+
 }

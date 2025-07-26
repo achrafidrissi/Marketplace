@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class ProductServiceImpl implements ProductService{
 
@@ -46,5 +48,15 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Product getProduct(Long productId) {
         return productRepository.findById(productId).orElse(null);
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
+    @Override
+    public void deleteProduct(Long productId) {
+        productRepository.deleteById(productId);
     }
 }

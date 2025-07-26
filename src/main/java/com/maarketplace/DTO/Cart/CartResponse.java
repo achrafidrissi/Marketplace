@@ -1,5 +1,6 @@
 package com.maarketplace.DTO.Cart;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,11 +9,9 @@ import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class CartResponse {
 
-    private Long cartId;
-    private Long userId;
-    private LocalDateTime insertedAt;
     private List<CartLineItemResponse> items;
     private Float totalPrice;
 }

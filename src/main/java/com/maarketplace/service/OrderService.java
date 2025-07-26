@@ -8,9 +8,13 @@ import java.util.List;
 
 public interface OrderService {
 
-    Iterable<Order> getAllOrdersByUser(@NotNull User user);
+    List<Order> getAllOrdersByUser(@NotNull User user);
 
     Order makeOrder(Long userId);
+
+    Order saveOrder(@NotNull Order order);
+
+    Order getOrder(@NotNull Long orderId);
 
     List<Object[]> getAllOrdersForUser(@NotNull Long userId);
 }

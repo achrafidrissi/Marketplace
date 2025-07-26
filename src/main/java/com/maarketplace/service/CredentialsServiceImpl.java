@@ -1,5 +1,6 @@
 package com.maarketplace.service;
 
+import com.maarketplace.exception.NotFoundException;
 import com.maarketplace.helpers.validators.TypeValidators;
 import com.maarketplace.model.Credentials;
 import com.maarketplace.repository.CredentialsRepository;
@@ -29,7 +30,7 @@ public class CredentialsServiceImpl implements CredentialsService{
     @Override
     public Credentials getCredentials(String username) {
         return credentialsRepository.findByUsername(username)
-                .orElseThrow(() -> new UserCredentialsUsernameNotExistsException(
+                .orElseThrow(() -> new NotFoundException(
                         "User Credentials with username '" + username + "' does not exist."
                 ));
     }

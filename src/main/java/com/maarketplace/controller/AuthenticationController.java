@@ -9,8 +9,8 @@ import com.maarketplace.controller.validator.UserValidator;
 import com.maarketplace.helpers.Utils;
 import com.maarketplace.model.Credentials;
 import com.maarketplace.model.User;
-import com.maarketplace.service.prov.CredentialsService1;
-import com.maarketplace.service.prov.UserService1;
+import com.maarketplace.service.CredentialsService;
+import com.maarketplace.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -36,8 +36,8 @@ public class AuthenticationController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
 
     private final PasswordEncoder passwordEncoder;
-    private final UserService1 userService;
-    private final CredentialsService1 credentialsService;
+    private final UserService userService;
+    private final CredentialsService credentialsService;
     private final AuthenticationManager authenticationManager;
     private final UserValidator userValidator;
     private final CredentialsValidator credentialsValidator;

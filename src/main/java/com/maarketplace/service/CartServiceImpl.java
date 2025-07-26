@@ -1,5 +1,6 @@
 package com.maarketplace.service;
 
+import com.maarketplace.exception.NotFoundException;
 import com.maarketplace.helpers.Utils;
 import com.maarketplace.helpers.constants.FieldSizes;
 import com.maarketplace.model.Cart;
@@ -62,6 +63,12 @@ public class CartServiceImpl implements CartService {
             cartLineItemRepository.save(item);
             cartRepository.save(cart);
         }
+    }
+
+    @Override
+    public Cart getCart(Long cartId) {
+        return cartRepository.findById(cartId)
+                .orElseThrow(() -> new NotFoundException("Cart with ID " + cartId + " not found"));
     }
 
     @Override

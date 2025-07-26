@@ -15,5 +15,7 @@ public interface CartService {
 
     void updateCartLineItem(@NotNull Cart cart, @NotNull Long cartLineItemId, Integer quantity);
 
+    Cart getCart(Long cartId);
+
     Float calculateCartPrice(@NotNull Cart cart);
 }

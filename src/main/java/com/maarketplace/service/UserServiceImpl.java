@@ -1,5 +1,6 @@
 package com.maarketplace.service;
 
+import com.maarketplace.exception.NotFoundException;
 import com.maarketplace.helpers.validators.TypeValidators;
 import com.maarketplace.model.Cart;
 import com.maarketplace.model.Credentials;
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public User getUser(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserEmailNotExistsException("User with email '" + email + "' does not exist."));
+                .orElseThrow(() -> new NotFoundException("User with email '" + email + "' does not exist."));
     }
 
     @Override
