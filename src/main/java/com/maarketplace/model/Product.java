@@ -1,10 +1,7 @@
 package com.maarketplace.model;
 
-import com.maarketplace.helpers.constants.FieldSizes;
 import com.maarketplace.helpers.constants.GlobalValues;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import jdk.jfr.Unsigned;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -13,24 +10,15 @@ import java.util.Objects;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Unsigned
-    @Min(FieldSizes.ENTITY_ID_MIN_VALUE)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Size(min = FieldSizes.PRODUCT_NAME_MIN_LENGTH, max = FieldSizes.PRODUCT_NAME_MAX_LENGTH, message = "The length of the Product name must be between 3 and 30 characters.")
     @Column(name = "name", nullable = false)
-    @NotBlank(message = "Product Name is a mandatory field.")
     private String name;
 
-    @Size(min = (FieldSizes.PRODUCT_DESCRIPTION_MIN_LENGTH), max = (FieldSizes.PRODUCT_DESCRIPTION_MAX_LENGTH), message = "The length of the Product description must be between 3 and 60 characters.")
     @Column(name = "description", nullable = false)
-    @NotBlank
     private String description;
 
-    @Min(value = (long) (FieldSizes.PRODUCT_PRICE_MIN_VALUE), message = "The minimum price of a Product must be greater or equal than 0.01 $.")
-    @Max(value = (long) (FieldSizes.PRODUCT_PRICE_MAX_VALUE), message = "The maximum price of a Product must be less or equal than 1000.00 $.")
-    @NotNull
     @Column(name = "price", nullable = false)
     private Float price;
 
@@ -38,8 +26,6 @@ public class Product {
     @JoinColumn(name = "category", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "products_productcategories_fk"))
     private ProductCategory category;
 
-    @NotNull
-    @Min(value = 0, message = "Stock cannot be negative.")
     @Column(name = "stock_quantity", nullable = false)
     private Integer stockQuantity;
 

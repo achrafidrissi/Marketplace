@@ -1,33 +1,23 @@
 package com.maarketplace.model;
 
-import com.maarketplace.helpers.constants.FieldSizes;
 import com.maarketplace.helpers.constants.GlobalValues;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import jdk.jfr.Unsigned;
 
 import java.util.Objects;
 
 @Entity(name = "ProductCategory")
 @Table(name = "product_categories", schema = GlobalValues.SQL_SCHEMA_NAME, uniqueConstraints = @UniqueConstraint(name = "productcategories_name_unique", columnNames = "name"))
 public class ProductCategory {
+
     @Id
-    @Unsigned
-    @Min(value = FieldSizes.ENTITY_ID_MIN_VALUE)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @NotBlank(message = "Product Category Name is a mandatory field.")
     @Column(name = "name", nullable = false, unique = true)
-    @Size(min = FieldSizes.PRODUCT_CATEGORY_NAME_MIN_LENGTH, max = FieldSizes.PRODUCT_CATEGORY_NAME_MAX_LENGTH)
     private String name;
 
-    @NotBlank(message = "Product Category Description is a mandatory field.")
     @Column(name = "description", nullable = false)
-    @Size(min = FieldSizes.PRODUCT_CATEGORY_DESCRIPTION_MIN_LENGTH, max = FieldSizes.PRODUCT_CATEGORY_DESCRIPTION_MAX_LENGTH)
     private String description;
 
     public ProductCategory() {

@@ -1,7 +1,9 @@
 package com.maarketplace.controller;
 
-import com.maarketplace.DTO.RegistrationRequest;
-import com.maarketplace.DTO.UserDTO;
+import com.maarketplace.DTO.User.LoginRequest;
+import com.maarketplace.DTO.User.LoginResponse;
+import com.maarketplace.DTO.User.RegistrationRequest;
+import com.maarketplace.DTO.User.UserResponse;
 import com.maarketplace.controller.validator.CredentialsValidator;
 import com.maarketplace.controller.validator.UserValidator;
 import com.maarketplace.helpers.Utils;
@@ -10,9 +12,9 @@ import com.maarketplace.model.User;
 import com.maarketplace.service.prov.CredentialsService1;
 import com.maarketplace.service.prov.UserService1;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,85 +30,58 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthenticationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private UserService1 userService;
-
-    @Autowired
-    private UserValidator userValidator;
-
-    @Autowired
-    private CredentialsService1 credentialsService;
-
-    @Autowired
-    private CredentialsValidator credentialsValidator;
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
+    private final UserService1 userService;
+    private final CredentialsService1 credentialsService;
+    private final AuthenticationManager authenticationManager;
+    private final UserValidator userValidator;
+    private final CredentialsValidator credentialsValidator;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(
-            @RequestBody @Valid RegistrationRequest request,
-            BindingResult bindingResult
-    ) {
-        User user = request.getUser();
-        Credentials credentials = request.getCredentials();
-        String confirmPassword = request.getConfirmPassword();
+    public ResponseEntity<?> registerUser(@RequestBody @Valid RegistrationRequest request, BindingResult result) {
+        credentialsValidator.setConfirmPassword(request.getConfirmPassword());
 
-        credentialsValidator.setConfirmPassword(confirmPassword);
-        userValidator.validate(user, bindingResult);
-        credentialsValidator.validate(credentials, bindingResult);
+        userValidator.validate(request.getUser(), result);
+        credentialsValidator.validate(request.getCredentials(), result);
 
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body(result.getAllErrors());
         }
 
+        // Save User
+        Credentials credentials = request.getCredentials().toEntity();
         Utils.cryptAndSaveUserCredentialsPassword(credentials, passwordEncoder);
-        user.setCredentials(credentials);
-        User savedUser = userService.saveUser(user);
 
-        if (savedUser != null) {
-            LOGGER.info("Registered account with User ID: {}", savedUser.getId());
-            return ResponseEntity.ok("User registered successfully.");
-        } else {
-            LOGGER.error("User registration failed.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User registration failed.");
-        }
+        User user = request.getUser().toEntity();
+        user.setCredentials(credentials);
+
+        User savedUser = userService.saveUser(user);
+        LOGGER.info("Registered new user with ID {}", savedUser.getId());
+
+        return ResponseEntity.ok(Map.of("message", "User registered successfully"));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Credentials credentials) {
+    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request) {
         try {
-            UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(
-                            credentials.getUsername(),
-                            credentials.getPassword()
-                    );
-
-            Authentication authentication = authenticationManager.authenticate(authenticationToken);
+            var token = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
+            Authentication authentication = authenticationManager.authenticate(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            // 🔥 Fix here: load Credentials from DB FIRST
-            Credentials dbCredentials = credentialsService.getCredentials(credentials.getUsername());
+            Credentials dbCredentials = credentialsService.getCredentials(request.getUsername());
             User user = userService.getUser(dbCredentials);
 
-            return ResponseEntity.ok(Map.of(
-                    "message", "Login successful",
-                    "username", dbCredentials.getUsername(),
-                    "user", new UserDTO(user)
-            ));
-
+            return ResponseEntity.ok(new LoginResponse("Login successful", dbCredentials.getUsername(), new UserResponse(user)));
 
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("error", "Invalid username or password"));
         }
     }
-
 }
 

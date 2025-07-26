@@ -1,6 +1,5 @@
 package com.maarketplace.service;
 
-import com.maarketplace.exception.UserCredentialsUsernameNotExistsException;
 import com.maarketplace.helpers.validators.TypeValidators;
 import com.maarketplace.model.Credentials;
 import com.maarketplace.repository.CredentialsRepository;

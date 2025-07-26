@@ -8,6 +8,7 @@ import jakarta.validation.constraints.*;
 import jdk.jfr.Unsigned;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,29 +21,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    @Unsigned
-    @Min(value = FieldSizes.ENTITY_ID_MIN_VALUE)
     private Long id;
 
-    @NotBlank(message = "Name is a mandatory field.")
-    @Size(min = FieldSizes.NAME_MIN_LENGTH, max = FieldSizes.NAME_MAX_LENGTH)
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotBlank(message = "Surname is a mandatory field.")
-    @Size(min = FieldSizes.SURNAME_MIN_LENGTH, max = FieldSizes.SURNAME_MAX_LENGTH)
     @Column(name = "surname", nullable = false)
     private String surname;
 
-    @DateTimeFormat(pattern = Temporals.DATE_FORMAT)
-    @Past(message = "Birth date must be in the past.")
     @Column(name = "birthdate", nullable = true)
     @Temporal(value = TemporalType.DATE)
-    private Date birthDate;
+    private LocalDate birthDate;
 
-    @NotBlank(message = "Email is a mandatory field.")
-    @Email(message = "Invalid email format.")
-    @Size(min = FieldSizes.EMAIL_MIN_LENGTH, max = FieldSizes.EMAIL_MAX_LENGTH)
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
@@ -59,14 +49,14 @@ public class User {
         this.credentials = null;
     }
 
-    public User(String name, String surname, String email, Float balance, Credentials credentials) {
+    public User(String name, String surname, String email, Credentials credentials) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.credentials = credentials;
     }
 
-    public User(String name, String surname, String email, Float balance, Credentials credentials, Date birthDate) {
+    public User(String name, String surname, String email, Credentials credentials, LocalDate birthDate) {
         this.name = name;
         this.surname = surname;
         this.birthDate = birthDate;
@@ -98,11 +88,11 @@ public class User {
         this.surname = surname;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return this.birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

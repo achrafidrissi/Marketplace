@@ -20,8 +20,6 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    @Unsigned
-    @Min(value = FieldSizes.ENTITY_ID_MIN_VALUE)
     private Long id;
 
     @JsonIgnore
@@ -33,8 +31,6 @@ public class Order {
     @JoinColumn(name = "cart", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "orders_carts_fk"))
     private Cart cart;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Temporals.DATE_FORMAT)
-    @DateTimeFormat(pattern = Temporals.DATE_TIME_FORMAT)
     @Column(name = "inserted_at", nullable = false)
     @Temporal(value = TemporalType.TIMESTAMP)
     private LocalDateTime insertedAt;

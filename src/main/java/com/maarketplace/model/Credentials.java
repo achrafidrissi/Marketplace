@@ -1,14 +1,7 @@
 package com.maarketplace.model;
 
-import com.maarketplace.helpers.constants.FieldSizes;
 import com.maarketplace.helpers.constants.GlobalValues;
-import com.maarketplace.helpers.constants.Temporals;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import jdk.jfr.Unsigned;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -18,15 +11,11 @@ import java.util.Objects;
 public class Credentials {
 
     @Id
-    @Unsigned
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    @Min(value = FieldSizes.ENTITY_ID_MIN_VALUE)
     private Long id;
-    @NotBlank
-    @Size(min = FieldSizes.USERNAME_MIN_LENGTH, max = FieldSizes.USERNAME_MAX_LENGTH, message = "The length of the username must be between 3 and 60 characters.")
+
     @Column(name = "username", unique = true, nullable = false)
-    @NotBlank(message = "Username is mandatory field.")
     private String username;
 
     @Column(name = "password", nullable = false)
@@ -34,12 +23,10 @@ public class Credentials {
 
     @Column(name = "inserted_at", nullable = false)
     @Temporal(value = TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = Temporals.DATE_TIME_FORMAT)
     private LocalDateTime insertedAt;
 
     @Column(name = "updated_at", nullable = false)
     @Temporal(value = TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = Temporals.DATE_TIME_FORMAT)
     private LocalDateTime updatedAt;
 
     public Credentials() {

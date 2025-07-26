@@ -1,12 +1,6 @@
 package com.maarketplace.model;
 
-import com.maarketplace.helpers.constants.FieldSizes;
-import com.maarketplace.helpers.constants.GlobalValues;
-import com.maarketplace.helpers.constants.Temporals;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jdk.jfr.Unsigned;
-import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,18 +10,16 @@ import java.util.Objects;
 @Table(name = "Carts", uniqueConstraints = {@UniqueConstraint(name = "carts_user_insertedat_unique", columnNames = {"_user", "inserted_at"})})
 public class Cart {
     public final static Float CART_START_PRICE = 0.0F;
+
     @Id
-    @Unsigned
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    @Min(value = FieldSizes.ENTITY_ID_MIN_VALUE)
     private Long id;
 
     @ManyToOne(targetEntity = User.class, optional = true)
     @JoinColumn(name = "_user", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "carts_users_fk"))
     private User user;
 
-    @DateTimeFormat(pattern = Temporals.DATE_TIME_FORMAT)
     @Column(name = "inserted_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime insertedAt;

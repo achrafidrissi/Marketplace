@@ -1,6 +1,5 @@
 package com.maarketplace.service;
 
-import com.maarketplace.exception.UserEmailNotExistsException;
 import com.maarketplace.helpers.validators.TypeValidators;
 import com.maarketplace.model.Cart;
 import com.maarketplace.model.Credentials;

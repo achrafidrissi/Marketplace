@@ -1,15 +1,8 @@
 package com.maarketplace.model;
 
 import com.maarketplace.helpers.Utils;
-import com.maarketplace.helpers.constants.FieldSizes;
 import com.maarketplace.helpers.constants.GlobalValues;
-import com.maarketplace.helpers.constants.Temporals;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jdk.jfr.Unsigned;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -21,20 +14,13 @@ public class CartLineItem {
     public static final Integer CARTLINEITEM_DEFAULT_QUANTITY = 1;
 
     @Id
-    @Unsigned
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    @Min(FieldSizes.ENTITY_ID_MIN_VALUE)
     private Long id;
 
-    @NotNull(message = "Cart line item quantity is mandatory field.")
-    @Min(value = FieldSizes.CARTLINEITEM_QUANTITY_MIN_VALUE, message = "Cart line item Quantity Min value is 1.")
-    @Max(value = FieldSizes.CARTLINEITEM_QUANTITY_MAX_VALUE, message = "Cart line item Quantity Min value is 1.")
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Min(value = (long) FieldSizes.CARTLINEITEM_CARTLINEITEMPRICE_MIN_VALUE, message = "Cart line item price Min value is 0.01 $.")
-    @Max(value = (long) FieldSizes.CARTLINEITEM_CARTLINEITEMPRICE_MAX_VALUE, message = "Cart line item price Max value is 1000.00 $.")
     @Column(name = "cartlineitem_price", nullable = false)
     private Float unitPrice;
 
@@ -46,14 +32,12 @@ public class CartLineItem {
     @JoinColumn(name = "product", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "products_products_fk"))
     private Product product;
 
-    @DateTimeFormat(pattern = Temporals.DATE_TIME_FORMAT)
     @Column(name = "inserted_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime insertedAt;
 
     @Column(name = "updated_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = Temporals.DATE_TIME_FORMAT)
     private LocalDateTime updatedAt;
 
     @Transient
