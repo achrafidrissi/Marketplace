@@ -21,9 +21,6 @@ public class ProductRequest {
     @DecimalMin(value = "0.0", message = "Price must be positive")
     private Float price;
 
-    @NotNull(message = "Category ID is required")
-    private Long categoryId;
-
     @NotNull(message = "Stock quantity is required.")
     @Min(value = 0, message = "Stock cannot be negative.")
     private Integer stockQuantity;

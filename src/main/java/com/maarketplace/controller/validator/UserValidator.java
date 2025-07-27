@@ -1,5 +1,6 @@
 package com.maarketplace.controller.validator;
 
+import com.maarketplace.DTO.User.UserRequest;
 import com.maarketplace.model.User;
 import com.maarketplace.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +27,19 @@ public class UserValidator implements Validator {
 
     @Override
     public void validate(@NonNull Object object, @NonNull Errors errors) {
-        User user = (User) object;
-        if (!this.getIsAccountUpdate() && this.userRepository.existsByEmail(user.getEmail())) {
+        if (!(object instanceof UserRequest userRequest)) {
+            throw new IllegalArgumentException("Expected UserRequest object");
+        }
+
+        if (!this.getIsAccountUpdate() && this.userRepository.existsByEmail(userRequest.getEmail())) {
             errors.rejectValue("email", "user.email.unique", "Email already used.");
         }
-        // Removed nation check as it no longer exists
+
+        // Ajoute d'autres validations personnalisées ici si besoin
     }
 
     @Override
     public boolean supports(@NonNull Class<?> clazz) {
-        return User.class.equals(clazz);
+        return UserRequest.class.equals(clazz);
     }
 }
-

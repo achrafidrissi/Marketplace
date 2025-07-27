@@ -2,6 +2,7 @@ package com.maarketplace.service;
 
 import com.maarketplace.model.ProductCategory;
 import com.maarketplace.repository.ProductCategoryRepository;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,8 +29,12 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     @Override
-    public Map<Long, ProductCategory> getAllProductCategoriesMap() {
-        return getAllProductCategories().stream()
-                .collect(Collectors.toMap(ProductCategory::getId, pc -> pc));
+    public ProductCategory saveCategory(@NotNull ProductCategory category) {
+        return productCategoryRepository.save(category);
+    }
+
+    @Override
+    public void deleteCategory(@NotNull Long id) {
+        productCategoryRepository.deleteById(id);
     }
 }
