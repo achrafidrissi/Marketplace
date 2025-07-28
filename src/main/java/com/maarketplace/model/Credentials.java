@@ -2,12 +2,16 @@ package com.maarketplace.model;
 
 import com.maarketplace.helpers.constants.GlobalValues;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity(name = "Credentials")
 @Table(name = "Credentials", schema = GlobalValues.SQL_SCHEMA_NAME, uniqueConstraints = @UniqueConstraint(name = "credentials_username_unique", columnNames = "username"))
+@EntityListeners(AuditingEntityListener.class)
 public class Credentials {
 
     @Id
@@ -23,10 +27,12 @@ public class Credentials {
 
     @Column(name = "inserted_at", nullable = false)
     @Temporal(value = TemporalType.TIMESTAMP)
+    @CreatedDate
     private LocalDateTime insertedAt;
 
     @Column(name = "updated_at", nullable = false)
     @Temporal(value = TemporalType.TIMESTAMP)
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
     public Credentials() {

@@ -2,11 +2,13 @@ package com.maarketplace.model;
 
 import com.maarketplace.helpers.constants.GlobalValues;
 import jakarta.persistence.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Objects;
 
 @Entity(name = "ProductCategory")
 @Table(name = "product_categories", schema = GlobalValues.SQL_SCHEMA_NAME, uniqueConstraints = @UniqueConstraint(name = "productcategories_name_unique", columnNames = "name"))
+@EntityListeners(AuditingEntityListener.class)
 public class ProductCategory {
 
     @Id

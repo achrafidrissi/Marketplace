@@ -1,21 +1,17 @@
 package com.maarketplace.model;
 
-import com.maarketplace.helpers.constants.FieldSizes;
 import com.maarketplace.helpers.constants.GlobalValues;
-import com.maarketplace.helpers.constants.Temporals;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import jdk.jfr.Unsigned;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "User")
 @Table(name = "Users", schema = GlobalValues.SQL_SCHEMA_NAME, uniqueConstraints = {@UniqueConstraint(name = "users_email_unique", columnNames = "email"), @UniqueConstraint(name = "users_credentials_unique", columnNames = "credentials")})
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
     @Id

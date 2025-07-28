@@ -8,6 +8,8 @@ import com.maarketplace.helpers.constants.Temporals;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jdk.jfr.Unsigned;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -15,6 +17,7 @@ import java.util.Objects;
 
 @Entity(name = "Order")
 @Table(name = "Orders", schema = GlobalValues.SQL_SCHEMA_NAME, uniqueConstraints = @UniqueConstraint(name = "orders_user_cart_insertedat_unique", columnNames = {"_user", "cart", "inserted_at"}))
+@EntityListeners(AuditingEntityListener.class)
 public class Order {
 
     @Id
@@ -33,6 +36,7 @@ public class Order {
 
     @Column(name = "inserted_at", nullable = false)
     @Temporal(value = TemporalType.TIMESTAMP)
+    @CreatedDate
     private LocalDateTime insertedAt;
 
     public Order() {

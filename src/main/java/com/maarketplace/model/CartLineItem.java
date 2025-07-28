@@ -3,12 +3,16 @@ package com.maarketplace.model;
 import com.maarketplace.helpers.Utils;
 import com.maarketplace.helpers.constants.GlobalValues;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity(name = "CartLineItem")
 @Table(name = "cart_line_items", schema = GlobalValues.SQL_SCHEMA_NAME, uniqueConstraints = @UniqueConstraint(name = "carts_user_unique", columnNames = {"cart", "product", "inserted_at"}))
+@EntityListeners(AuditingEntityListener.class)
 public class CartLineItem {
 
     public static final Integer CARTLINEITEM_DEFAULT_QUANTITY = 1;
@@ -34,10 +38,12 @@ public class CartLineItem {
 
     @Column(name = "inserted_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
     private LocalDateTime insertedAt;
 
     @Column(name = "updated_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
     @Transient

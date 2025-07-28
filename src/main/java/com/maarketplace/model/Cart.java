@@ -1,6 +1,9 @@
 package com.maarketplace.model;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +11,7 @@ import java.util.Objects;
 
 @Entity(name = "Cart")
 @Table(name = "Carts", uniqueConstraints = {@UniqueConstraint(name = "carts_user_insertedat_unique", columnNames = {"_user", "inserted_at"})})
+@EntityListeners(AuditingEntityListener.class)
 public class Cart {
     public final static Float CART_START_PRICE = 0.0F;
 
@@ -22,6 +26,7 @@ public class Cart {
 
     @Column(name = "inserted_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
     private LocalDateTime insertedAt;
 
     @OneToMany(targetEntity = CartLineItem.class, mappedBy = "cart", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER, orphanRemoval = true)
