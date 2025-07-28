@@ -2,11 +2,16 @@ package com.maarketplace.model;
 
 import com.maarketplace.helpers.constants.GlobalValues;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity(name = "Product")
 @Table(name = "Products", schema = GlobalValues.SQL_SCHEMA_NAME)
+@EntityListeners(AuditingEntityListener.class)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +35,11 @@ public class Product {
     private Integer stockQuantity;
 
     @Column(name = "inserted_at", nullable = false)
+    @CreatedDate
     private LocalDateTime insertedAt;
 
     @Column(name = "updated_at", nullable = false)
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
 
