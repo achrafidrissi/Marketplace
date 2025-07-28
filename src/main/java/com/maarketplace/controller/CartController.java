@@ -24,7 +24,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/cart")
 @RequiredArgsConstructor
-@Tag(name = "Cart", description = "Manage cart operations")
+@Tag(name = "Cart",
+        description = "API pour gérer les opérations sur le panier : ajout, suppression, mise à jour et récupération des produits."
+)
 public class CartController {
 
     private final CartService cartService;

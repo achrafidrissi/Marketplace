@@ -8,6 +8,7 @@ import com.maarketplace.model.ProductCategory;
 import com.maarketplace.service.ProductCategoryService;
 import com.maarketplace.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
+@Tag(
+        name = "Produits",
+        description = "API CRUD pour gérer les produits disponibles sur la plateforme : pièces anciennes, objets personnalisés, etc."
+)
+
 public class ProductController {
 
     private final ProductService productService;

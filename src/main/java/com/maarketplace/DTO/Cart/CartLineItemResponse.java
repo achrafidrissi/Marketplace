@@ -2,11 +2,13 @@ package com.maarketplace.DTO.Cart;
 
 import com.maarketplace.model.CartLineItem;
 import com.maarketplace.model.Product;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Schema(name = "ArticlePanierRéponse", description = "Détail d'un article du panier retourné à l'utilisateur.")
 public class CartLineItemResponse {
 
     private Long id;

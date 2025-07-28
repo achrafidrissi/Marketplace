@@ -1,11 +1,13 @@
 package com.maarketplace.DTO.Product;
 
 import com.maarketplace.model.Product;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Schema(name = "ProduitRéponse", description = "Représente un produit disponible ou consulté.")
 public class ProductResponse {
 
     private Long id;

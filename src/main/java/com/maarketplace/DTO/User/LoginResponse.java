@@ -1,10 +1,12 @@
 package com.maarketplace.DTO.User;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Schema(name = "ConnexionRéponse", description = "Réponse renvoyée après une authentification réussie.")
 public class LoginResponse {
 
     private String message;

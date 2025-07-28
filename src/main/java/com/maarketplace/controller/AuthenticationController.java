@@ -11,6 +11,7 @@ import com.maarketplace.model.Credentials;
 import com.maarketplace.model.User;
 import com.maarketplace.service.CredentialsService;
 import com.maarketplace.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -31,6 +32,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
+@Tag(
+        name = "Authentification",
+        description = "API pour gérer l'inscription, la connexion et la sécurité des utilisateurs du marketplace."
+)
+
 public class AuthenticationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);

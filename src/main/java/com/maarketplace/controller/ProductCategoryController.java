@@ -19,7 +19,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/categories")
 @RequiredArgsConstructor
-@Tag(name = "Product Categories", description = "Operations related to product categories")
+@Tag(name = "Product Categories",
+        description = "API pour gérer les catégories des produits du marketplace (ajout, modification, suppression, etc.)."
+)
 public class ProductCategoryController {
 
     private final ProductCategoryService productCategoryService;

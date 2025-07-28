@@ -1,11 +1,15 @@
 package com.maarketplace.DTO.User;
 
 import com.maarketplace.DTO.Credentials.CredentialsRequest;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
+@Schema(name = "Inscription", description = "Données requises pour inscrire un nouvel utilisateur.")
 public class RegistrationRequest {
 
     @Valid

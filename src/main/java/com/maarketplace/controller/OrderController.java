@@ -16,13 +16,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
-@Tag(name = "Orders", description = "Operations related to user orders")
+@Tag(name = "Orders",
+        description = "API pour créer, consulter, annuler ou suivre les commandes passées dans le marketplace."
+)
 public class OrderController {
 
     private final OrderService orderService;

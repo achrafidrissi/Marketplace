@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.maarketplace.model.Cart;
 import com.maarketplace.model.Order;
 import com.maarketplace.model.User;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
+@Schema(name = "CommandeRéponse", description = "Détails d'une commande validée.")
 public class OrderResponse {
 
     private Long id;
